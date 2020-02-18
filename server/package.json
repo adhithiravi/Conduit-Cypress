@@ -1,0 +1,53 @@
+{
+  "name": "hapipal-realworld-example-app",
+  "version": "0.0.0",
+  "description": "Exemplary real world application built with hapi pal",
+  "author": "Devin Ivy <devin@bigroomstudios.com>",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "engines": {
+    "node": "10.19.0"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node server",
+    "start:coverage": "../node_modules/.bin/nyc --silent node server",
+    "test": "lab -a code -I '__core-js_shared__' -L",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "avocat": "1.1.0",
+    "boom": "7.3.0",
+    "bounce": "1.2.3",
+    "confidence": "4.0.2",
+    "dotenv": "8.2.0",
+    "glue": "6.0.0",
+    "hapi": "18.0.0",
+    "hapi-auth-jwt2": "8.2.0",
+    "haute-couture": "3.5.0",
+    "joi": "14.3.1",
+    "jsonwebtoken": "8.5.1",
+    "knex": "0.20.10",
+    "objection": "2.1.2",
+    "objection-db-errors": "1.1.2",
+    "randomstring": "1.1.5",
+    "schmervice": "1.4.0",
+    "schwifty": "4.4.0",
+    "secure-password": "3.1.0",
+    "slugify": "1.3.6",
+    "sqlite3": "4.1.1",
+    "toys": "2.3.1"
+  },
+  "devDependencies": {
+    "code": "5.2.4",
+    "eslint": "6.8.0",
+    "eslint-config-hapi": "12.0.0",
+    "eslint-plugin-hapi": "4.1.0",
+    "hpal-debug": "1.4.0",
+    "lab": "18.0.2",
+    "newman": "4.5.7"
+  }
+}
