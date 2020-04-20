@@ -1,6 +1,7 @@
-/// <reference-types = "Cypress" />
+/// <reference types="Cypress" />
 
 describe('login test suite', () => {
+
     it('does not work with wrong credentials', () => {
         cy.visit('http://localhost:4100')
         cy.get('[data-cy=sign-in]').click()
@@ -17,12 +18,16 @@ describe('login test suite', () => {
     });
 
     it('happy path test', () => {
+
+        const email = 'visitor@adhithiravichandran.com'
+        const password = 'visiting'
+
         cy.visit('http://localhost:4100')
         cy.get('[data-cy=sign-in]').click()
         cy.location('pathname').should('equal', '/login')
 
-        cy.get('@username').type('visitor@adshithiravichandran.com')
-        cy.get('[data-cy=password]').type('visiting')
+        cy.get('[data-cy=username]').type(email)
+        cy.get('[data-cy=password]').type(password)
         cy.get('[data-cy=login-form').submit()
 
         cy.get('[data-cy=profile]').should('be.visible')

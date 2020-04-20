@@ -15,10 +15,6 @@ describe('New Post on Conduit', () => {
         cy.get('[data-cy=tags]').as('Tags')
         cy.get('[data-cy=article]').as('Article')
         cy.get('[data-cy=publish]').as('Publish')
-
-        // DO NOT DO THIS
-        //cy.get('[data-cy=publish]').click().as('ClickPublish') 
-
     })
 
     it('write a new post', () => {

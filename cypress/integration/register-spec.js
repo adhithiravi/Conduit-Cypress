@@ -18,11 +18,15 @@ describe('Register', () => {
 
         cy.location('pathname').should('equal', '/register')
 
+        cy.screenshot('register/screenshot1')
+
         cy.get('[data-cy=username').type(username)
         cy.get('[data-cy=email').type(email)
         cy.get('[data-cy=password').type(password)
 
         cy.get('form').submit()
+
+        cy.screenshot('register/screenshot2')
 
         cy.location('pathname').should('equal', '/')
         cy.get('[data-cy=profile]').should('be.visible')
@@ -31,9 +35,7 @@ describe('Register', () => {
         cy.contains('a.nav-link', 'Global Feed').as('GlobalFeedPresent').should('not.have.class', 'nav-link active')
 
         cy.get('@GlobalFeedPresent').click()
-        cy.get('@GlobalFeedPresent').should('have.class', 'nav-link active')
-
-
+        cy.get('@GlobalFeedPresent').should('have.class', 'nav-link active')    
         
     }); 
 })

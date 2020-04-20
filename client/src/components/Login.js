@@ -55,13 +55,16 @@ class Login extends React.Component {
 
               <ListErrors errors={this.props.errors} />
 
-              <form onSubmit={this.submitForm(email, password)}>
+              <form onSubmit={this.submitForm(email, password)}
+                data-cy="login-form">
                 <fieldset>
 
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"
+                      name="username"
                       type="email"
+                      data-cy="username"
                       placeholder="Email"
                       value={email}
                       onChange={this.changeEmail} />
@@ -71,6 +74,7 @@ class Login extends React.Component {
                     <input
                       className="form-control form-control-lg"
                       type="password"
+                      data-cy="password"
                       placeholder="Password"
                       value={password}
                       onChange={this.changePassword} />
