@@ -27,10 +27,8 @@ describe('New Post on Conduit', () => {
         cy.get('@Tags').type('test{enter}')
         cy.get('@Publish').click()
 
-
         // assertion to check url
         cy.location('pathname').should('equal', '/article/my-new-post')
-
     });
 
     it('edit article', () => {
@@ -83,6 +81,21 @@ describe('New Post on Conduit', () => {
         // Validate that it is in the fav articles tab
         cy.get('[data-cy=favorited-articles]').click()
         cy.contains('.article-preview', 'My New Post')
+    });
 
+    it('Write article through server request', () => {
+        
+        cy.postArticle({
+            title: 'first post',
+            description: 'first description',
+            body: 'first article',
+            tagList: ['first', 'testing']
+          })
+
+        // assertion to check article was published
+        cy.get('[data-cy=profile]').click()
+        cy.location('pathname').should('equal', '/@testuser')
+        cy.get('.article-preview').should('have.length', 1)
+        cy.contains('.article-preview', 'first post')
     });
 })

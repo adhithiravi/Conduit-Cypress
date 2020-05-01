@@ -4,6 +4,10 @@ import '@bahmutov/cy-api/support'
 
 const apiUrl = Cypress.env('apiUrl')
 
+Cypress.Screenshot.defaults({
+  screenshotOnRunFailure: true
+})
+
 // a custom Cypress command to login using XHR call
 // and then set the received token in the local storage
 // can log in with default user or with a given one
@@ -21,17 +25,17 @@ Cypress.Commands.add('login', (user = Cypress.env('user')) => {
 // custom Cypress command to simply return a token after logging in
 // useful to perform authorized API calls
 Cypress.Commands.add('getLoginToken', (user = Cypress.env('user')) => {
-  return cy
-    .request('POST', `${apiUrl}/api/users/login`, {
-      user: Cypress._.pick(user, ['email', 'password'])
-    })
+    return cy.request('POST', `${apiUrl}/api/users/login`, {
+      user: Cypress._.pick(user, ['email', 'password']),
+      }
+    )
     .its('body.user.token')
     .should('exist')
 })
 
 // creates a user with email and password
 // defined in cypress.json environment variables
-// if the user already exists, ignores the error
+// if the user already exists, ignores the errorsss
 // or given user info parameters
 Cypress.Commands.add('registerUserIfNeeded', (options = {}) => {
   const defaults = {
@@ -46,7 +50,33 @@ Cypress.Commands.add('registerUserIfNeeded', (options = {}) => {
     body: {
       user
     },
-    failOnStatusCode: false
+    failOnStatusCode: false,
+  })
+})  
+
+Cypress.Commands.add('removeUser', (options = {}) => {
+  const defaults = {
+    image: 'https://robohash.org/6FJ.png?set=set3&size=150x150',
+    // email, password
+    ...Cypress.env('user')
+  }
+  const user = Cypress._.defaults({}, options, defaults)
+  cy.server()
+  cy.route({
+    method: 'DELETE',
+    url: `${apiUrl}/api/users`,
+    response: {},
+    headers: {
+      'X-Token': null
+    },
+    onRequest: (xhr) => {
+      // do something with the
+      // raw XHR object when the
+      // request initially goes out
+    },
+    onResponse: (xhr) => {
+      console.log('I recieved my stubbed response')
+    }
   })
 })
 
@@ -128,16 +158,28 @@ Cypress.Commands.add('postArticle', fields => {
   })
 })
 
-Cypress.Commands.add('writeArticle', article => {
+Cypress.Commands.add('writeArticleAndPostComment', article => {
   cy.window()
     .its('agent.Articles')
     .invoke('create', article) // resolves with new article object
     .its('article.slug')
     .then(slug => {
-      // make sure the article fully loads
-      // including its comments before proceeding
       cy.server()
-      cy.route(`/api/articles/${slug}/comments`).as('comments')
+      cy.route(`/api/articles/${slug}/comments`, {
+       comments: [{
+        id: 1,
+        createdAt: "2020-04-21T16:17:02.585Z",
+        updatedAt: "2020-04-21T16:17:02.585Z",
+        body: "great post 👍",
+        author: {
+          id: 1,
+          username: "testuser",
+          bio: "My stubbed bio",
+          image: "https://robohash.org/6FJ.png?set=set3&size=150x150",
+          following: false,
+        }
+       }]
+    }).as('comments')
       cy.visit(`/article/${slug}`)
       cy.wait('@comments')
       cy.wrap(slug)
@@ -160,7 +202,5 @@ Cypress.Commands.add('postComment', (articleSlug, text) => {
       authorization: `Token ${jwt}`
     }
   })
-  // after posting comment through API,
-  // need to reload the page to see it
   cy.reload()
 })

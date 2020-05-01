@@ -12,22 +12,20 @@ describe('login test suite', () => {
         cy.get('[data-cy=login-form]').submit()
 
         cy.contains('.error-messages li', 'email must be a valid email')
-        
         cy.location('pathname').should('equal', '/login')
-    
     });
 
     it('happy path test', () => {
 
-        const email = 'visitor@adhithiravichandran.com'
-        const password = 'visiting'
+        // Get registered user from env
+        const user = Cypress.env('user')
 
         cy.visit('http://localhost:4100')
         cy.get('[data-cy=sign-in]').click()
         cy.location('pathname').should('equal', '/login')
 
-        cy.get('[data-cy=username]').type(email)
-        cy.get('[data-cy=password]').type(password)
+        cy.get('[data-cy=username]').type(user.email)
+        cy.get('[data-cy=password]').type(user.password)
         cy.get('[data-cy=login-form').submit()
 
         cy.get('[data-cy=profile]').should('be.visible')

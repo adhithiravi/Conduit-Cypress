@@ -15,15 +15,13 @@ describe('Register', () => {
 
         cy.visit('http://localhost:4100')
         cy.contains('a.nav-link', 'Sign up').click()
-
         cy.location('pathname').should('equal', '/register')
 
         cy.screenshot('register/screenshot1')
 
-        cy.get('[data-cy=username').type(username)
-        cy.get('[data-cy=email').type(email)
-        cy.get('[data-cy=password').type(password)
-
+        cy.get('[data-cy=username]').type(username)
+        cy.get('[data-cy=email]').type(email)
+        cy.get('[data-cy=password]').type(password)
         cy.get('form').submit()
 
         cy.screenshot('register/screenshot2')
