@@ -3,6 +3,8 @@
 
 Fork of [applitools/cypress-applitools-webinar](https://github.com/applitools/cypress-applitools-webinar) which is a fork of [gothinkster/realworld](https://github.com/gothinkster/realworld) "Conduit" blogging application.
 
+This repo contains all the tests and examples that were taught in the Pluralsight course : Cypress: End-to-end JavaScript Testing
+
 ![Application](images/app.png)
 
 ## Tests
