@@ -26,7 +26,7 @@ describe('login test suite', () => {
 
         cy.get('[data-cy=username]').type(user.email)
         cy.get('[data-cy=password]').type(user.password)
-        cy.get('[data-cy=login-form').submit()
+        cy.get('[data-cy=login-form]').submit()
 
         cy.get('[data-cy=profile]').should('be.visible')
         cy.location('pathname').should('equal', '/')
