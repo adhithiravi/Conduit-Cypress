@@ -21,7 +21,7 @@ The combined report is saved in `coverage/index.html` after the tests finish:
 
 ![Example full coverage report](images/full-coverage.png)
 
-To learn more, read the [Cypress code coverage guide](https://on.cypress.io/coverage).
+To learn more, read the [Cypress code coverage guide](https://docs.cypress.io/guides/tooling/code-coverage).
 
 [renovate-badge]: https://img.shields.io/badge/renovate-app-blue.svg
 [renovate-app]: https://renovateapp.com/
